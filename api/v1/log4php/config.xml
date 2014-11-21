@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<log4php:configuration xmlns:log4php="http://logging.apache.org/log4php/">
+   <appender name="default" class="LoggerAppenderFile">
+      <param name="file" value="default.log" />
+      <layout class="LoggerLayoutPattern">
+         <param name="ConversionPattern" value="%d{Y-m-d H:i:s} [%p] %c: %m (at line %L)%n" />
+      </layout>
+   </appender>
+   <appender name="errorLog" class="LoggerAppenderFile">
+      <param name="file" value="error.log" />
+     
+      <layout class="LoggerLayoutPattern">
+         <param name="ConversionPattern" value="%d{Y-m-d H:i:s} [%p] %c: %m (at line %L)%n" />
+      </layout>
+      <filter class="LoggerFilterLevelRange">
+         <param name="LevelMin" value="error" />
+         <param name="LevelMax" value="fatal" />
+      </filter>
+      <filter class="LoggerFilterDenyAll" />
+   </appender>
+   <root>
+      <level value="DEBUG" />
+      <appender_ref ref="default" />
+   </root>
+   <logger name="qabaselog" additivity="true">
+      <!--
+ with additivity set to TRUE the default is also called, eg parent 
+-->
+      <level value="ALL" />
+      <!--
+ by setting level to all, parent loggers can react based on their threshold, if this is set to ERROR, the root logger will not be messaged, use the filter to set what level of messages are captured to this log 
+-->
+      <appender_ref ref="errorLog" />
+   </logger>
+</log4php:configuration>
